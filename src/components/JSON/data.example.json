@@ -1,0 +1,45 @@
+{
+    "user_name": "Paul Wild",
+    "active_users": 100,
+    "new_orders": 1000,
+    "tasks": [
+      {
+        "name": "Task 1",
+        "description": "Hire new freelancer.",
+        "done_rate": 75
+      },
+      {
+        "name": "Task 2",
+        "description": "Fire me.",
+        "done_rate": 34
+      }
+    ],
+    "line_graph": [
+      {
+        "name": "Speed",
+        "data": [
+          {
+            "x_val": 1,
+            "y_val": 3
+          },
+          {
+            "x_val": 2,
+            "y_val": 2
+          }
+        ]
+      },
+      {
+        "name": "Time",
+        "data": [
+          {
+            "x_val": 1,
+            "y_val": 3
+          },
+          {
+            "x_val": 2,
+            "y_val": 2
+          }
+        ]
+      }
+    ]
+  }

@@ -11,6 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import Popper from '@material-ui/core/Popper';
+import MenuList from '@material-ui/core/MenuList';
+import Grow from '@material-ui/core/Grow';
+import MenuItem from '@material-ui/core/MenuItem';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 // Backend
 import axios from 'axios';
@@ -95,18 +100,19 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
 	width: drawerWidth,
 	flexShrink: 0,
+	overflowX: 'scroll',
 	boxShadow: '3px 0 3px rgba(68, 68, 68, 0.3)',
 	'&::-webkit-scrollbar-track': {
 		boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
 	},
 	'&::-webkit-scrollbar': {
-		width: 5,
+		width: 3,
 	},
 	'&::-webkit-scrollbar-thumb': {
 		backgroundColor: 'rgb(255, 255, 255, 0)',
 		outline: '1px solid slategrey',
 		'&:hover': {
-			backgroundColor: 'rgba(0,0,0,.1)',
+			backgroundColor: 'rgba(0,160,0,.2)',
 		},
 	  }
   },
@@ -174,14 +180,40 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
 
+	// Drawer open or closed
   const [state, setState] = React.useState({
     isSideBar: false,
   });
 
+  // Account menu open or closed
+  const [openPoperAccount, setOpenPoperAccount] = React.useState(false);
+
+  // Drawer chosen item
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const anchorRef = React.useRef(null);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+  };
+
+  const handleToggle = () => {
+    setOpenPoperAccount(prevOpen => !prevOpen);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenPoperAccount(false);
+    }
+  }
+
+  const handleClose = event => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenPoperAccount(false);
   };
 
   const classes = useStyles();
@@ -298,9 +330,33 @@ function App() {
 							inputProps={{ 'aria-label': 'search' }}
 							/>
 						</div>
-						<Button className={classes.greetings}>
-							{textEn.greetings + ""}
-						</Button>
+						<div>
+							<Button className={classes.greetings}
+							ref={anchorRef}
+							aria-controls={openPoperAccount ? 'menu-list-grow' : undefined}
+							aria-haspopup="true"
+							onClick={handleToggle}>
+								{textEn.greetings + ""}
+							</Button>
+							<Popper open={openPoperAccount} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+							{({ TransitionProps, placement }) => (
+								<Grow
+								{...TransitionProps}
+								style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+								>
+								<Paper>
+									<ClickAwayListener onClickAway={handleClose}>
+									<MenuList autoFocusItem={openPoperAccount} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+										<MenuItem onClick={handleClose}>Profile</MenuItem>
+										<MenuItem onClick={handleClose}>My account</MenuItem>
+										<MenuItem onClick={handleClose}>Logout</MenuItem>
+									</MenuList>
+									</ClickAwayListener>
+								</Paper>
+								</Grow>
+							)}
+							</Popper>
+						</div>
 						<Avatar className={classes.avatar} ></Avatar>
 						{/* <Menu 
 						title={textEn + ""}>

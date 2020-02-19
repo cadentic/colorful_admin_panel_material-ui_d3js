@@ -1,0 +1,150 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/root.json",
+    "type": "object",
+    "title": "The Root Schema",
+    "required": [
+      "user_name",
+      "active_users",
+      "new_orders",
+      "tasks",
+      "line_graph"
+    ],
+    "properties": {
+      "user_name": {
+        "$id": "#/properties/user_name",
+        "type": "string",
+        "title": "The User_name Schema",
+        "default": "",
+        "examples": [
+          "Paul Wild"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "active_users": {
+        "$id": "#/properties/active_users",
+        "type": "integer",
+        "title": "The Active_users Schema",
+        "default": 0,
+        "examples": [
+          100
+        ]
+      },
+      "new_orders": {
+        "$id": "#/properties/new_orders",
+        "type": "integer",
+        "title": "The New_orders Schema",
+        "default": 0,
+        "examples": [
+          1000
+        ]
+      },
+      "tasks": {
+        "$id": "#/properties/tasks",
+        "type": "array",
+        "title": "The Tasks Schema",
+        "items": {
+          "$id": "#/properties/tasks/items",
+          "type": "object",
+          "title": "The Items Schema",
+          "required": [
+            "name",
+            "description",
+            "done_rate"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/tasks/items/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "Task 1"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "description": {
+              "$id": "#/properties/tasks/items/properties/description",
+              "type": "string",
+              "title": "The Description Schema",
+              "default": "",
+              "examples": [
+                "Hire new freelancer."
+              ],
+              "pattern": "^(.*)$"
+            },
+            "done_rate": {
+              "$id": "#/properties/tasks/items/properties/done_rate",
+              "type": "integer",
+              "title": "The Done_rate Schema",
+              "default": 0,
+              "examples": [
+                75
+              ]
+            }
+          }
+        }
+      },
+      "line_graph": {
+        "$id": "#/properties/line_graph",
+        "type": "array",
+        "title": "The Line_graph Schema",
+        "items": {
+          "$id": "#/properties/line_graph/items",
+          "type": "object",
+          "title": "The Items Schema",
+          "required": [
+            "name",
+            "data"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/line_graph/items/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "Speed"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "data": {
+              "$id": "#/properties/line_graph/items/properties/data",
+              "type": "array",
+              "title": "The Data Schema",
+              "items": {
+                "$id": "#/properties/line_graph/items/properties/data/items",
+                "type": "object",
+                "title": "The Items Schema",
+                "required": [
+                  "x_val",
+                  "y_val"
+                ],
+                "properties": {
+                  "x_val": {
+                    "$id": "#/properties/line_graph/items/properties/data/items/properties/x_val",
+                    "type": "integer",
+                    "title": "The X_val Schema",
+                    "default": 0,
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "y_val": {
+                    "$id": "#/properties/line_graph/items/properties/data/items/properties/y_val",
+                    "type": "integer",
+                    "title": "The Y_val Schema",
+                    "default": 0,
+                    "examples": [
+                      3
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

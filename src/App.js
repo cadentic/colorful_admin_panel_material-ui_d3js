@@ -11,8 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import SvgIcon from '@material-ui/core/SvgIcon';
+
+// Backend
 import axios from 'axios';
+
+// Styles
+import clsx from 'clsx';
 
 // Icons
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
@@ -26,10 +30,14 @@ import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 // import json-s
 import * as textEn from './components/JSON/text.en.json';
 import IconButton from '@material-ui/core/IconButton';
-import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper } from '@material-ui/core';
+import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme } from '@material-ui/core';
 const appBarHeight = 60;
+const drawerWidth = 250;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({ 
+	root: {
+		display: 'flex',
+	},
   appBar: {
       zIndex: theme.zIndex.drawer + 1,
       background: '#ffffff',
@@ -37,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 	  height: appBarHeight,
   },
   list: {
-  width: 250,
+	width: drawerWidth,
   },
   inputRoot: {
     color: 'inherit',
@@ -85,21 +93,36 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   drawerPaper: {
-	top: appBarHeight,
+	width: drawerWidth,
+	flexShrink: 0,
 	boxShadow: '3px 0 3px rgba(68, 68, 68, 0.3)',
+	'&::-webkit-scrollbar-track': {
+		boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+	},
+	'&::-webkit-scrollbar': {
+		width: 5,
+	},
+	'&::-webkit-scrollbar-thumb': {
+		backgroundColor: 'rgb(255, 255, 255, 0)',
+		outline: '1px solid slategrey',
+		'&:hover': {
+			backgroundColor: 'rgba(0,0,0,.1)',
+		},
+	  }
   },
   dividerDiv: {
 	  height: 30,
-	  marginLeft: 20,
 	  marginTop: 40,
 	  paddingBottom: 5,
+	  width: drawerWidth,
+	  textAlign: 'center',
   },
   listItem: {
 	  height: 40,
 	  marginLeft: 0,
   },
   icon: {
-	  marginRight: 10,
+	  marginRight: 30,
 	  marginLeft: 10,
   },
   avatar: {
@@ -118,8 +141,7 @@ const useStyles = makeStyles(theme => ({
 	marginRight: 10,
   },
   papers: {
-	alignItems: "center",
-	justify: "center",
+	flexGrow: 0,
 	marginTop: appBarHeight + 20,
     display: 'flex',
     flexWrap: 'wrap',
@@ -128,6 +150,25 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(16),
       height: theme.spacing(16),
 	},
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+	whiteSpace: 'no-wrap',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(9) + 1,
+  },
+  topMarginDrawer: {
+	  height: appBarHeight,
   },
 }));
 
@@ -144,89 +185,91 @@ function App() {
   };
 
   const classes = useStyles();
-  let sidebar = null;
-  if (state.isSideBar) {
-    	sidebar =
-        <div className={classes.list} onClick={() => setState({
-			...state,
-			isSideBar: !state.isSideBar,
-		})}>
-            <Drawer open={state.isSideBar}
-			width={200}
-			variant="persistent"
-			anchor='left'
+  let sidebar =
+        <div className={classes.list} >
+			<Drawer 
+			variant="permanent"
 			classes={{
-					paper: classes.drawerPaper
-				}}
-			      >
-					<div className={classes.dividerDiv}>
-						<Typography>
-							{textEn.main}
-						</Typography>
-					</div>
-					<List className={classes.list}>
-						<ListItem className={classes.listItem} button key={textEn.home}
-						onClick={event => handleListItemClick(event, 0)}
-						selected={selectedIndex===0}>
-							<HomeOutlinedIcon fontSize='small' className={classes.icon}/>
-							<ListItemText primary={textEn.home} />
-						</ListItem>
-						<ListItem button key={textEn.messages}
-						onClick={event => handleListItemClick(event, 1)}
-						selected={selectedIndex===1}>
-							<EmailOutlinedIcon fontSize='small' className={classes.icon}/>
-							<ListItemText primary={textEn.messages} />
-						</ListItem>
-					</List>
-					<div className={classes.dividerDiv}>
-						<Typography>
-							{textEn.apps}
-						</Typography>
-					</div>
-					<List className={classes.list}>
-						<ListItem button key={textEn.charts}
-						onClick={event => handleListItemClick(event, 2)}
-						selected={selectedIndex===2}>
-							<BarChartOutlinedIcon fontSize='small' className={classes.icon} />
-							<ListItemText primary={textEn.charts} />
-						</ListItem>
-						<ListItem button key={textEn.forms}
-						onClick={event => handleListItemClick(event, 3)}
-						selected={selectedIndex===3}>
-							<FileCopyOutlinedIcon fontSize='small' className={classes.icon} />
-							<ListItemText primary={textEn.forms} />
-						</ListItem>
-						<ListItem button key={textEn.layout}
-						onClick={event => handleListItemClick(event, 4)}
-						selected={selectedIndex===4}>
-							<LayersOutlinedIcon fontSize='small' className={classes.icon} />
-							<ListItemText primary={textEn.layout} />
-						</ListItem>
-					</List>
-					<div className={classes.dividerDiv}>
-						<Typography>
-							{textEn.extras}
-						</Typography>
-					</div>
-					<List className={classes.list}>
-						<ListItem button key={textEn.timer}
-						onClick={event => handleListItemClick(event, 5)}
-						selected={selectedIndex===5}>
-							<TimerOutlinedIcon fontSize='small' className={classes.icon} />
-							<ListItemText primary={textEn.timer} />
-						</ListItem>
-						<ListItem button key={textEn.users}
-						onClick={event => handleListItemClick(event, 6)}
-						selected={selectedIndex===6}>
+				paper: clsx(classes.drawerPaper, {
+					[classes.drawerClose]: !state.isSideBar,
+					[classes.drawerOpen]: state.isSideBar,
+				})
+			}}
+			className={clsx(classes.drawerPaper, {
+				[classes.drawerClose]: !state.isSideBar,
+				[classes.drawerOpen]: state.isSideBar,
+			})}
+			>
+				<div className={classes.topMarginDrawer}>
+				</div>
+				<div className={classes.dividerDiv}>
+							<Typography>
+								{textEn.main}
+							</Typography>
+				</div>
+				<List className={classes.list}>
+							<ListItem className={classes.listItem} button key={textEn.home}
+							onClick={event => handleListItemClick(event, 0)}
+							selected={selectedIndex===0}>
+								<HomeOutlinedIcon fontSize='small' className={classes.icon}/>
+								<ListItemText primary={textEn.home} />
+							</ListItem>
+							<ListItem button key={textEn.messages}
+							onClick={event => handleListItemClick(event, 1)}
+							selected={selectedIndex===1}>
+								<EmailOutlinedIcon fontSize='small' className={classes.icon}/>
+								<ListItemText primary={textEn.messages} />
+							</ListItem>
+						</List>
+				<div className={classes.dividerDiv}>
+							<Typography>
+								{textEn.apps}
+							</Typography>
+						</div>
+				<List className={classes.list}>
+							<ListItem button key={textEn.charts}
+							onClick={event => handleListItemClick(event, 2)}
+							selected={selectedIndex===2}>
+								<BarChartOutlinedIcon fontSize='small' className={classes.icon} />
+								<ListItemText primary={textEn.charts} />
+							</ListItem>
+							<ListItem button key={textEn.forms}
+							onClick={event => handleListItemClick(event, 3)}
+							selected={selectedIndex===3}>
+								<FileCopyOutlinedIcon fontSize='small' className={classes.icon} />
+								<ListItemText primary={textEn.forms} />
+							</ListItem>
+							<ListItem button key={textEn.layout}
+							onClick={event => handleListItemClick(event, 4)}
+							selected={selectedIndex===4}>
+								<LayersOutlinedIcon fontSize='small' className={classes.icon} />
+								<ListItemText primary={textEn.layout} />
+							</ListItem>
+						</List>
+				<div className={classes.dividerDiv}>
+							<Typography>
+								{textEn.extras}
+							</Typography>
+						</div>
+				<List className={classes.list}>
+					<ListItem button key={textEn.timer}
+					onClick={event => handleListItemClick(event, 5)}
+					selected={selectedIndex===5}>
+						<TimerOutlinedIcon fontSize='small' className={classes.icon} />
+						<ListItemText primary={textEn.timer} />
+					</ListItem>
+					<ListItem button key={textEn.users}
+					onClick={event => handleListItemClick(event, 6)}
+					selected={selectedIndex===6}>
 							<PersonOutlineOutlinedIcon fontSize='small' className={classes.icon} />
-							<ListItemText primary={textEn.users} />
-						</ListItem>
-					</List>
-            </Drawer>
+						<ListItemText primary={textEn.users} />
+					</ListItem>
+				</List>
+			</Drawer>
         </div>;
-}
   return (
-    <div className={classes.bg}>
+    <div className={classes.root}>
+		<div>
 		<div className={classes.grow}>
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
@@ -267,16 +310,17 @@ function App() {
 				</Toolbar>
 			</AppBar>
 		</div>
-		{sidebar}
-		<div className={classes.papers}>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
 		</div>
+		{sidebar}
+		<main className={classes.papers}>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+			<Paper elevation={3}></Paper>
+		</main>
     </div>
   );
 }

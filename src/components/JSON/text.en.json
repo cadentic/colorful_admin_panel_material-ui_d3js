@@ -1,0 +1,17 @@
+{
+    "main": "MAIN",
+    "home": "Home",
+    "messages": "Messages",
+    "apps": "APPS",
+    "charts": "Charts",
+    "forms": "Forms",
+    "layout": "Layout",
+    "extras": "EXTRAS",
+    "timer": "Timer",
+    "users": "Users",
+    "greetings": "Hi, ",
+    "activeUsers": "Active Users",
+    "progressBar": "progressBar",
+    "lineGraph": "Line Graph",
+    "calendar": "Calendar"
+}

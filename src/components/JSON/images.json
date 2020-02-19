@@ -1,0 +1,9 @@
+{
+    "user": "/details/components/images/user.svg",
+    "charts": "./components/images/charts.svg",
+    "forms": "./components/images/forms.svg",
+    "home": "/details/components/images/home.svg",
+    "layout": "./components/images/layout.svg",
+    "messages": "./components/images/messages.svg",
+    "timer": "./components/images/timer.svg"
+}

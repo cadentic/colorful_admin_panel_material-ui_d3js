@@ -10,8 +10,9 @@
     "timer": "Timer",
     "users": "Users",
     "greetings": "Hi, ",
-    "activeUsers": "Active Users",
-    "progressBar": "progressBar",
-    "lineGraph": "Line Graph",
+    "active_users": "Active Users",
+    "progress_bar": "progressBar",
+    "line_graph": "Line Graph",
+    "new_orders": "New Orders",
     "calendar": "Calendar"
 }

@@ -19,6 +19,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 // Backend
 import axios from 'axios';
+import * as data from './components/JSON/data.example.json';
 
 // Styles
 import clsx from 'clsx';
@@ -35,7 +36,9 @@ import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 // import json-s
 import * as textEn from './components/JSON/text.en.json';
 import IconButton from '@material-ui/core/IconButton';
-import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme } from '@material-ui/core';
+import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme, Box } from '@material-ui/core';
+import TaskForm, {fillPercentage} from './components/taskForm.js';
+import DataForm from './components/dataForm.js';
 const appBarHeight = 60;
 const drawerWidth = 250;
 
@@ -122,6 +125,7 @@ const useStyles = makeStyles(theme => ({
 	  paddingBottom: 5,
 	  width: drawerWidth,
 	  textAlign: 'center',
+	  fontWeight: 'bold'
   },
   listItem: {
 	  height: 40,
@@ -152,7 +156,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     '& > *': {
-      margin: theme.spacing(1),
+      marginRight: theme.spacing(13),
       width: theme.spacing(16),
       height: theme.spacing(16),
 	},
@@ -175,6 +179,14 @@ const useStyles = makeStyles(theme => ({
   },
   topMarginDrawer: {
 	  height: appBarHeight,
+  },
+  sectionName: {
+	fontWeight: 700,
+  },
+  tasksBlock: {
+  },
+  countUsersAndOrders: {
+
   },
 }));
 
@@ -235,7 +247,7 @@ function App() {
 				<div className={classes.topMarginDrawer}>
 				</div>
 				<div className={classes.dividerDiv}>
-							<Typography>
+							<Typography className={classes.sectionName}>
 								{textEn.main}
 							</Typography>
 				</div>
@@ -254,7 +266,7 @@ function App() {
 							</ListItem>
 						</List>
 				<div className={classes.dividerDiv}>
-							<Typography>
+							<Typography className={classes.sectionName}>
 								{textEn.apps}
 							</Typography>
 						</div>
@@ -279,7 +291,7 @@ function App() {
 							</ListItem>
 						</List>
 				<div className={classes.dividerDiv}>
-							<Typography>
+							<Typography  className={classes.sectionName}>
 								{textEn.extras}
 							</Typography>
 						</div>
@@ -298,7 +310,12 @@ function App() {
 					</ListItem>
 				</List>
 			</Drawer>
-        </div>;
+		</div>;
+
+		window.onload = () => function() {
+			fillPercentage("task_zero", data.tasks[0].done_rate / 100);
+			fillPercentage("task_one", data.tasks[1].done_rate / 100)
+		}()
   return (
     <div className={classes.root}>
 		<div>
@@ -369,13 +386,24 @@ function App() {
 		</div>
 		{sidebar}
 		<main className={classes.papers}>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
-			<Paper elevation={3}></Paper>
+			<div className={classes.countUsersAndOrders}>
+				<DataForm isShop={false} data={data.active_users} text={textEn.active_users} />
+				<DataForm isShop={true} data={data.new_orders} text={textEn.new_orders} />
+			</div>
+			<div className={classes.tasksBlock}>
+				<TaskForm
+				name={data.tasks[0].name}
+				description={data.tasks[0].description}
+				doneRate={data.tasks[0].done_rate} 
+				taskID={"task_zero"}
+				/>
+				<TaskForm
+				name={data.tasks[1].name}
+				description={data.tasks[1].description}
+				doneRate={data.tasks[1].done_rate}
+				taskID={"task_one"}
+				/>
+			</div>
 		</main>
     </div>
   );

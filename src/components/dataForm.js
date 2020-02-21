@@ -56,10 +56,12 @@ const useStyle = makeStyles(theme => ({
     userFooter: {
         backgroundColor: '#31B4E6',
         height: '100%',
+        padding: '10px 0 0 0'
     },
     shopFooter: {
         backgroundColor: '#75CA9F',
         height: '100%',
+        padding: '10px 0 0 0'
     },
     data: {
         textAlign: 'center',

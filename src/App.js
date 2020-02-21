@@ -39,6 +39,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme, Box } from '@material-ui/core';
 import TaskForm, {fillPercentage} from './components/taskForm.js';
 import DataForm from './components/dataForm.js';
+import Calendar from './components/calendar.js'
+
 const appBarHeight = 60;
 const drawerWidth = 250;
 
@@ -46,148 +48,164 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		display: 'flex',
 	},
-  appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      background: '#ffffff',
-	  color: '#606060',
-	  height: appBarHeight,
-  },
-  list: {
-	width: drawerWidth,
-  },
-  inputRoot: {
-    color: 'inherit',
-  },
-  inputInput: {
-    padding: theme.spacing(0, 1, 1, 2),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-    },
-  },
-  search: {
-	paddingTop: 3,
-    position: 'relative',
-    backgroundColor: fade(theme.palette.common.black, 0.10),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.black, 0.20),
+	appBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		background: '#ffffff',
+		color: '#606060',
+		height: appBarHeight,
 	},
-	borderRadius: 50,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 'auto',
+	list: {
+		width: drawerWidth,
 	},
-	height: 20,
-	top: 7,
-	right: 10,
-  },
-  logoBut: {
-	marginLeft: 0,
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-  	},
-  maxWidth: 200,
-  },
-  searchIcon: {
-    width: theme.spacing(0),
-	height: 20,
-	marginLeft: 130,
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  drawerPaper: {
-	width: drawerWidth,
-	flexShrink: 0,
-	overflowX: 'scroll',
-	boxShadow: '3px 0 3px rgba(68, 68, 68, 0.3)',
-	'&::-webkit-scrollbar-track': {
-		boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+	inputRoot: {
+		color: 'inherit',
 	},
-	'&::-webkit-scrollbar': {
-		width: 3,
-	},
-	'&::-webkit-scrollbar-thumb': {
-		backgroundColor: 'rgb(255, 255, 255, 0)',
-		outline: '1px solid slategrey',
-		'&:hover': {
-			backgroundColor: 'rgba(0,160,0,.2)',
+	inputInput: {
+		padding: theme.spacing(0, 1, 1, 2),
+		transition: theme.transitions.create('width'),
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+		width: 120,
 		},
-	  }
-  },
-  dividerDiv: {
-	  height: 30,
-	  marginTop: 40,
-	  paddingBottom: 5,
-	  width: drawerWidth,
-	  textAlign: 'center',
-	  fontWeight: 'bold'
-  },
-  listItem: {
-	  height: 40,
-	  marginLeft: 0,
-  },
-  icon: {
-	  marginRight: 30,
-	  marginLeft: 10,
-  },
-  avatar: {
-	display: 'flex',
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  greetings: {
-	marginRight: 10,
-  },
-  papers: {
-	flexGrow: 0,
-	marginTop: appBarHeight + 20,
-    display: 'flex',
-    flexWrap: 'wrap',
-    '& > *': {
-      marginRight: theme.spacing(13),
-      width: theme.spacing(16),
-      height: theme.spacing(16),
 	},
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-	whiteSpace: 'no-wrap',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(9) + 1,
-  },
-  topMarginDrawer: {
-	  height: appBarHeight,
-  },
-  sectionName: {
-	fontWeight: 700,
-  },
-  tasksBlock: {
-  },
-  countUsersAndOrders: {
+	search: {
+		paddingTop: 3,
+		position: 'relative',
+		backgroundColor: fade(theme.palette.common.black, 0.10),
+		'&:hover': {
+		backgroundColor: fade(theme.palette.common.black, 0.20),
+		},
+		borderRadius: 50,
+		width: '100%',
+		[theme.breakpoints.up('sm')]: {
+		width: 'auto',
+		},
+		height: 20,
+		top: 7,
+		right: 10,
+	},
+	logoBut: {
+		display: 'block',
+		marginLeft: 0,
+		[theme.breakpoints.up('sm')]: {
+		display: 'block',
+		},
+	maxWidth: 200,
+	},
+	searchIcon: {
+		width: theme.spacing(0),
+		height: 20,
+		marginLeft: 130,
+		position: 'absolute',
+		pointerEvents: 'none',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		[theme.breakpoints.up('sm')]: {
+			
+		},
+	},
+	drawerPaper: {
+		width: drawerWidth,
+		flexShrink: 0,
+		overflowX: 'scroll',
+		boxShadow: '3px 0 3px rgba(68, 68, 68, 0.3)',
+		'&::-webkit-scrollbar-track': {
+			boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+		},
+		'&::-webkit-scrollbar': {
+			width: 3,
+		},
+		'&::-webkit-scrollbar-thumb': {
+			backgroundColor: 'rgb(255, 255, 255, 0)',
+			outline: '1px solid slategrey',
+			'&:hover': {
+				backgroundColor: 'rgba(0,160,0,.2)',
+			},
+		}
+	},
+	dividerDiv: {
+		height: 30,
+		marginTop: 40,
+		paddingBottom: 5,
+		width: drawerWidth,
+		textAlign: 'center',
+		fontWeight: 'bold'
+	},
+	listItem: {
+		height: 40,
+		marginLeft: 0,
+	},
+	icon: {
+		marginRight: 30,
+		marginLeft: 10,
+	},
+	avatar: {
+		display: 'flex',
+	},
+	sectionDesktop: {
+		display: 'flex',
+		[theme.breakpoints.up('md')]: {
+			display: 'flex',
+		},
+	},
+	grow: {
+		flexGrow: 1,
+	},
+	greetings: {
+		marginRight: 10,
+	},
+	papers: {
+		flexGrow: 0,
+		marginTop: appBarHeight + 20,
+		display: 'flex',
+		// flexWrap: 'wrap',
+		'& > *': {
+			marginRight: theme.spacing(2),
+			marginBottom: theme.spacing(13)
+			// width: theme.spacing(16),
+			// height: theme.spacing(16),
+		},
+		[theme.breakpoints.up('sd')]: {
+			display: 'block',
+		},
+		
+	},
+	drawerOpen: {
+		width: drawerWidth,
+		transition: theme.transitions.create('width', {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.enteringScreen,
+		}),
+	},
+	drawerClose: {
+		whiteSpace: 'no-wrap',
+		transition: theme.transitions.create('width', {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen,
+		}),
+		overflowX: 'hidden',
+		width: theme.spacing(9) + 1,
+	},
+	topMarginDrawer: {
+		marginTop: 40
+	},
+	sectionName: {
+		fontWeight: 700,
+	},
+	tasksBlock: {
+	},
+	countUsersAndOrders: {
+	},
+	logoButSize: {
+		width: '100%',
+	},
+	toolBar: {
+		minHeight: 64,
+	},
+	calendar: {
 
-  },
+	}
 }));
 
 function App() {
@@ -321,19 +339,21 @@ function App() {
 		<div>
 		<div className={classes.grow}>
 			<AppBar position="fixed" className={classes.appBar}>
-				<Toolbar>
-					<Button 
-					fullWidth={false}
-					edge="start"
-					className={classes.logoBut}
-					onClick={()=>setState({
-						...state, 
-						isSideBar: !state.isSideBar,
-					})}
-					style={{flex: 1}}>
-						Your logo
-					</Button>
-					<div className={classes.grow} />
+				<Toolbar className={classes.toolBar}>
+					<div className={classes.logoButSize}>
+						<Button 
+						fullWidth={false}
+						edge="start"
+						className={classes.logoBut}
+						onClick={()=>setState({
+							...state, 
+							isSideBar: !state.isSideBar,
+						})}
+						style={{flex: 1}}>
+							Your logo
+						</Button>
+					</div>
+					{/* <div className={classes.grow} /> */}
 					<div className={classes.sectionDesktop}>
 						<div className={classes.search}>
 							<div className={classes.searchIcon}>
@@ -404,6 +424,10 @@ function App() {
 				taskID={"task_one"}
 				/>
 			</div>
+			<Calendar 
+			className={classes.calendar}
+			name={textEn.calendar} 
+			/>
 		</main>
     </div>
   );

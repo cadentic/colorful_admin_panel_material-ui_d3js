@@ -41,7 +41,7 @@ import TaskForm, {fillPercentage} from './components/taskForm.js';
 import DataForm from './components/dataForm.js';
 import Calendar from './components/calendar.js'
 import ProgressBar from './components/progressBar.js';
-import Chart from './components/chart.js';
+import Chart, { chartDraw } from './components/chart.js';
 
 const appBarHeight = 60;
 const drawerWidth = 250;
@@ -340,6 +340,7 @@ function App() {
 	window.onload = () => function() {
 		fillPercentage("task_zero", data.tasks[0].done_rate / 100);
 		fillPercentage("task_one", data.tasks[1].done_rate / 100);
+		chartDraw(data.line_graph);
 	}()
   return (
     <div className={classes.root}>
@@ -439,6 +440,7 @@ function App() {
 			/>
 			<Chart
 			name={textEn.line_graph}
+			data={data.line_graph}
 			/>
 		</main>
     </div>

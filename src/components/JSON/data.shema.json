@@ -97,6 +97,7 @@
         "title": "The Items Schema",
         "required": [
           "name",
+          "description",
           "data"
         ],
         "properties": {
@@ -107,6 +108,16 @@
             "default": "",
             "examples": [
               "Speed"
+            ],
+            "pattern": "^(.*)$"
+          },
+          "description": {
+            "$id": "#/properties/line_graph/items/properties/description",
+            "type": "string",
+            "title": "The Description Schema",
+            "default": "",
+            "examples": [
+              "some text there"
             ],
             "pattern": "^(.*)$"
           },

@@ -17,6 +17,7 @@
     "line_graph": [
       {
         "name": "Speed",
+        "description": "some text there",
         "data": [
           {
             "x_val": 1,
@@ -25,11 +26,28 @@
           {
             "x_val": 2,
             "y_val": 2
+          },
+          {
+            "x_val": 4,
+            "y_val": 6
+          },
+          {
+            "x_val": 6,
+            "y_val": 8
+          },
+          {
+            "x_val": 7,
+            "y_val": 2
+          },
+          {
+            "x_val": 13,
+            "y_val": 20
           }
         ]
       },
       {
         "name": "Time",
+        "description":"some text there",
         "data": [
           {
             "x_val": 1,
@@ -38,6 +56,22 @@
           {
             "x_val": 2,
             "y_val": 2
+          },
+          {
+            "x_val": 10,
+            "y_val": 5
+          },
+          {
+            "x_val": 6,
+            "y_val": 40
+          },
+          {
+            "x_val": 4,
+            "y_val": 5
+          },
+          {
+            "x_val": 15,
+            "y_val": 29
           }
         ]
       }

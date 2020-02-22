@@ -40,6 +40,8 @@ import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme, Box }
 import TaskForm, {fillPercentage} from './components/taskForm.js';
 import DataForm from './components/dataForm.js';
 import Calendar from './components/calendar.js'
+import ProgressBar from './components/progressBar.js';
+import Chart from './components/chart.js';
 
 const appBarHeight = 60;
 const drawerWidth = 250;
@@ -81,7 +83,6 @@ const useStyles = makeStyles(theme => ({
 		width: 'auto',
 		},
 		height: 20,
-		top: 7,
 		right: 10,
 	},
 	logoBut: {
@@ -144,6 +145,8 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 	},
 	sectionDesktop: {
+		alignItems: 'center',
+        justifyContent: 'center',
 		display: 'flex',
 		[theme.breakpoints.up('md')]: {
 			display: 'flex',
@@ -154,15 +157,19 @@ const useStyles = makeStyles(theme => ({
 	},
 	greetings: {
 		marginRight: 10,
+		width: theme.spacing(15),
+		textTransform: 'none'
 	},
 	papers: {
 		flexGrow: 0,
 		marginTop: appBarHeight + 20,
 		display: 'flex',
-		// flexWrap: 'wrap',
+		flexWrap: 'wrap',
+		alignItems: 'center',
+        justifyContent: 'center',
 		'& > *': {
 			marginRight: theme.spacing(2),
-			marginBottom: theme.spacing(13)
+			// marginBottom: theme.spacing(13)
 			// width: theme.spacing(16),
 			// height: theme.spacing(16),
 		},
@@ -330,10 +337,10 @@ function App() {
 			</Drawer>
 		</div>;
 
-		window.onload = () => function() {
-			fillPercentage("task_zero", data.tasks[0].done_rate / 100);
-			fillPercentage("task_one", data.tasks[1].done_rate / 100)
-		}()
+	window.onload = () => function() {
+		fillPercentage("task_zero", data.tasks[0].done_rate / 100);
+		fillPercentage("task_one", data.tasks[1].done_rate / 100);
+	}()
   return (
     <div className={classes.root}>
 		<div>
@@ -373,7 +380,9 @@ function App() {
 							aria-controls={openPoperAccount ? 'menu-list-grow' : undefined}
 							aria-haspopup="true"
 							onClick={handleToggle}>
-								{textEn.greetings + ""}
+								<p>
+									{textEn.greetings}<b>{data.user_name}</b>
+								</p>
 							</Button>
 							<Popper open={openPoperAccount} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
 							{({ TransitionProps, placement }) => (
@@ -395,10 +404,6 @@ function App() {
 							</Popper>
 						</div>
 						<Avatar className={classes.avatar} ></Avatar>
-						{/* <Menu 
-						title={textEn + ""}>
-							{/* TODO }
-						</Menu> */}
 					</div>
 				</Toolbar>
 			</AppBar>
@@ -427,6 +432,13 @@ function App() {
 			<Calendar 
 			className={classes.calendar}
 			name={textEn.calendar} 
+			/>
+			<ProgressBar
+			name={textEn.progress_bar}
+			data={data.progress}
+			/>
+			<Chart
+			name={textEn.line_graph}
 			/>
 		</main>
     </div>

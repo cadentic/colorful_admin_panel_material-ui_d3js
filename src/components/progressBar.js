@@ -1,41 +1,50 @@
 import React from 'react';
 
-import { Card, CardHeader, CardContent, Divider} from '@material-ui/core';
+import { Card, CardHeader, CardContent, Divider, LinearProgress} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 var textColor = '#606060';
 var bacgroundED = '#ededed';
 
 const useStyle = makeStyles(theme=> ({
     calenderCard: {
-        width: theme.spacing(70),
-        height: 524,
+        width: theme.spacing(81),
+        height: theme.spacing(44),
         color: textColor,
-        marginBottom: 24,
+        // marginBottom: 24,
         borderRadius: 10,
-        marginLeft: 12,
+        // marginLeft: 12,
     },
     cardHeaderTitle: {
         fontSize: 18,
         color: textColor,
     },
     cardContent: {
-        display: 'flex',
+        display: 'block',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '0'
     },
-
+    progressBar: {
+        height: theme.spacing(3),
+    },
+    progressBlock: {
+        marginBottom: theme.spacing(2)
+    },
+    taskName: {
+        fontWeight: 700,
+        flex: '1 1 auto'
+    },
+    numbersVal: {
+        // float: 'right'
+    },
+    header: {
+        display: 'flex'
+    }
 }));
 
 function ProgressBar(props) {
     
     const classes = useStyle();
-
-
 
     return(
         <div>
@@ -47,7 +56,28 @@ function ProgressBar(props) {
                 title={props.name} />
                 <Divider />
                 <CardContent className={classes.cardContent}>
-                  
+                  {(new Array(4)).fill('0').map((item, index) => {
+                      if (index < props.data.length) {
+                          let d = props.data[index].data;
+                          return (
+                              <div className={classes.progressBlock} key={index}>
+                                    <div className={classes.header}>
+                                        <div className={classes.taskName}>
+                                            {props.data[index].name}
+                                        </div>
+                                        <div className={classes.numbersVal}>
+                                            <b>{d.current}</b>/{d.all}
+                                        </div>
+                                    </div>
+                                  <LinearProgress
+                                  variant="determinate"
+                                  className={classes.progressBar}
+                                  value={100 * d.current / d.all}
+                                  />
+                              </div>
+                          );
+                      }
+                  })}
                 </CardContent>
             </Card>
         </div>

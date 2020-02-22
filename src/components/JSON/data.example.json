@@ -41,5 +41,21 @@
           }
         ]
       }
+    ],
+    "progress": [
+      {
+        "name": "First task",
+        "data": {
+          "all": 100,
+          "current": 32
+        }
+      },
+      {
+        "name": "qeqwe",
+        "data": {
+          "all": 250,
+          "current": 50
+        }
+      }
     ]
   }

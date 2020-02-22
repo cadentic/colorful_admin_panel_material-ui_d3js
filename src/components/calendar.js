@@ -12,7 +12,7 @@ var bacgroundED = '#ededed';
 const useStyle = makeStyles(theme=> ({
     calenderCard: {
         width: theme.spacing(70),
-        height: 524,
+        height: theme.spacing(65.5),
         color: textColor,
         marginBottom: 24,
         borderRadius: 10,
@@ -136,7 +136,7 @@ function Calendar(props) {
     const classes = useStyle();
 
     const [state, setState] = React.useState({
-        day: curDate.getDay(),
+        day: curDate.getDate(),
         month: curDate.getMonth(),
         year: curDate.getFullYear()
     });
@@ -186,17 +186,17 @@ function Calendar(props) {
         curDate = new Date(state.year, state.month, state.day);
     }
 
-    var q = new Date(state.year, state.month, 0).getDate();
-    var z = 0;
-    if (state.month == 0) {
-        z = (new Date(state.year - 1, 11, 0)).getDate();
+    var q = 0;
+    if (state.month < 11) {
+        q = new Date(state.year, state.month + 1, 0).getDate();
     }
     else {
-        z = (new Date(state.year, state.month - 1, 0)).getDate();
+        q = new Date(state.year + 1, 0, 0).getDate();
     }
+    var z = 0;
 
+    z = (new Date(state.year, state.month, 0)).getDate();
     let count = 0;
-
     return(
         <div>
             <Card elevation={5} className={classes.calenderCard}>
@@ -232,14 +232,14 @@ function Calendar(props) {
                             <div className={classes.sheet}>
                                 { 
                                 ((new Array(35)).fill('0')).map((item, index) => {
-                                    if (z + index - curDate.getDay() < z) {
+                                    if (index - curDate.getDay() < 0) {
                                         count++;
                                         return (<div className={classes.cellDateNotThis} key={index}>
                                             {z + index - curDate.getDay() + 1}
                                         </div>);
                                     }
                                     else {
-                                        if (index <= q) {
+                                        if (index - count - q < 0) {
                                             if (originalDate.getFullYear() === state.year && originalDate.getDate() === index + 1 - count && originalDate.getMonth() === state.month) {
                                                 return (<div className={classes.cellDateToday} key={index}>
                                                     {index + 1 - curDate.getDay()}
@@ -252,7 +252,7 @@ function Calendar(props) {
                                         }
                                         else {
                                             return (<div className={classes.cellDateNotThis} key={index}>
-                                                {index - q}
+                                                {index + 1 - count - q}
                                             </div>);
                                         }
                                     }

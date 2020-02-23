@@ -9,11 +9,10 @@ var textColor = '#606060';
 var bacgroundED = '#ededed';
 
 const useStyle = makeStyles(theme=> ({
-    calenderCard: {
+    chartCard: {
         width: theme.spacing(70),
         height: theme.spacing(44),
         color: textColor,
-        marginBottom: 24,
         borderRadius: 10,
         marginLeft: 12,
     },
@@ -156,7 +155,7 @@ function Chart(props) {
 
     return(
         <div>
-            <Card elevation={5} className={classes.calenderCard}>
+            <Card elevation={5} className={classes.chartCard}>
                 <CardHeader
                 classes={{
                     title: classes.cardHeaderTitle

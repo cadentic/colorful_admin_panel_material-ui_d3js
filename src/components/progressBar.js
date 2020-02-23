@@ -11,7 +11,6 @@ const useStyle = makeStyles(theme=> ({
         width: theme.spacing(81),
         height: theme.spacing(44),
         color: textColor,
-        marginBottom: 24,
         borderRadius: 10,
         // marginLeft: 12,
     },

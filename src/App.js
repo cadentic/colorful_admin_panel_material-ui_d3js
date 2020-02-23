@@ -43,6 +43,8 @@ import Calendar from './components/calendar.js'
 import ProgressBar from './components/progressBar.js';
 import Chart, { chartDraw } from './components/chart.js';
 
+import logo from './logo.png';
+
 const appBarHeight = 60;
 const drawerWidth = 250;
 
@@ -88,10 +90,13 @@ const useStyles = makeStyles(theme => ({
 	logoBut: {
 		display: 'block',
 		marginLeft: 0,
+		height: appBarHeight,
+		paddingTop: 0,
+		marginTop: 0,
 		[theme.breakpoints.up('sm')]: {
 		display: 'block',
 		},
-	maxWidth: 200,
+		maxWidth: 200,
 	},
 	searchIcon: {
 		width: theme.spacing(0),
@@ -163,18 +168,11 @@ const useStyles = makeStyles(theme => ({
 	papers: {
 		flexGrow: 0,
 		marginTop: appBarHeight + 20,
-		display: 'flex',
-		flexWrap: 'wrap',
+		display: 'block',
 		alignItems: 'center',
         justifyContent: 'center',
 		'& > *': {
 			marginRight: theme.spacing(2),
-			// marginBottom: theme.spacing(13)
-			// width: theme.spacing(16),
-			// height: theme.spacing(16),
-		},
-		[theme.breakpoints.up('sd')]: {
-			display: 'block',
 		},
 		
 	},
@@ -201,17 +199,39 @@ const useStyles = makeStyles(theme => ({
 		fontWeight: 700,
 	},
 	tasksBlock: {
+
 	},
 	countUsersAndOrders: {
+
 	},
 	logoButSize: {
 		width: '100%',
+		paddingTop: 0,
+		marginTop: 0,
+		height: '100%',
 	},
 	toolBar: {
 		minHeight: 64,
+		paddingLeft: theme.spacing(2),
+		paddingTop: 0,
 	},
 	calendar: {
 
+	},
+	contentTop: {
+		display: 'flex',
+		'& > *': {
+			marginRight: theme.spacing(2),
+		},
+	},
+	contentBot: {
+		display: 'flex',
+		'& > *': {
+			marginRight: theme.spacing(2),
+		},
+	},
+	logo: {
+		height: appBarHeight
 	}
 }));
 
@@ -341,8 +361,8 @@ function App() {
 		fillPercentage("task_zero", data.tasks[0].done_rate / 100);
 		fillPercentage("task_one", data.tasks[1].done_rate / 100);
 		chartDraw(data.line_graph);
-	}()
-  return (
+	}();
+  	return (
     <div className={classes.root}>
 		<div>
 		<div className={classes.grow}>
@@ -358,7 +378,7 @@ function App() {
 							isSideBar: !state.isSideBar,
 						})}
 						style={{flex: 1}}>
-							Your logo
+							<img src={logo} className={classes.logo}></img>
 						</Button>
 					</div>
 					{/* <div className={classes.grow} /> */}
@@ -397,6 +417,16 @@ function App() {
 										<MenuItem onClick={handleClose}>Profile</MenuItem>
 										<MenuItem onClick={handleClose}>My account</MenuItem>
 										<MenuItem onClick={handleClose}>Logout</MenuItem>
+										{((new Array(data.menus.count)).fill("0")).map((el, i) => {
+											if (data.menus.menus[i].id === "user_menu"){
+												return (
+												data.menus.menus[i].items.map((item, index) => {
+													console.log(item.name)
+													return (<MenuItem onClick={handleClose}>{item.name}</MenuItem>);
+												})
+												);
+											}
+										})}
 									</MenuList>
 									</ClickAwayListener>
 								</Paper>
@@ -412,36 +442,40 @@ function App() {
 		</div>
 		{sidebar}
 		<main className={classes.papers}>
-			<div className={classes.countUsersAndOrders}>
-				<DataForm isShop={false} data={data.active_users} text={textEn.active_users} />
-				<DataForm isShop={true} data={data.new_orders} text={textEn.new_orders} />
-			</div>
-			<div className={classes.tasksBlock}>
-				<TaskForm
-				name={data.tasks[0].name}
-				description={data.tasks[0].description}
-				doneRate={data.tasks[0].done_rate} 
-				taskID={"task_zero"}
+			<div className={classes.contentTop}>
+				<div className={classes.countUsersAndOrders}>
+					<DataForm isShop={false} data={data.active_users} text={textEn.active_users} />
+					<DataForm isShop={true} data={data.new_orders} text={textEn.new_orders} />
+				</div>
+				<div className={classes.tasksBlock}>
+					<TaskForm
+					name={data.tasks[0].name}
+					description={data.tasks[0].description}
+					doneRate={data.tasks[0].done_rate} 
+					taskID={"task_zero"}
+					/>
+					<TaskForm
+					name={data.tasks[1].name}
+					description={data.tasks[1].description}
+					doneRate={data.tasks[1].done_rate}
+					taskID={"task_one"}
+					/>
+				</div>
+				<Calendar 
+				className={classes.calendar}
+				name={textEn.calendar} 
 				/>
-				<TaskForm
-				name={data.tasks[1].name}
-				description={data.tasks[1].description}
-				doneRate={data.tasks[1].done_rate}
-				taskID={"task_one"}
+			</div>
+			<div className={classes.contentBot}>
+				<ProgressBar
+				name={textEn.progress_bar}
+				data={data.progress}
+				/>
+				<Chart
+				name={textEn.line_graph}
+				data={data.line_graph}
 				/>
 			</div>
-			<Calendar 
-			className={classes.calendar}
-			name={textEn.calendar} 
-			/>
-			<ProgressBar
-			name={textEn.progress_bar}
-			data={data.progress}
-			/>
-			<Chart
-			name={textEn.line_graph}
-			data={data.line_graph}
-			/>
 		</main>
     </div>
   );

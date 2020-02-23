@@ -10,7 +10,8 @@
     "new_orders",
     "tasks",
     "line_graph",
-    "progress"
+    "progress",
+    "menus"
   ],
   "properties": {
     "user_name": {
@@ -207,6 +208,98 @@
                 "examples": [
                   32
                 ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "menus": {
+      "$id": "#/properties/menus",
+      "type": "object",
+      "title": "The Menus Schema",
+      "required": [
+        "count",
+        "menus"
+      ],
+      "properties": {
+        "count": {
+          "$id": "#/properties/menus/properties/count",
+          "type": "integer",
+          "title": "The Count Schema",
+          "default": 0,
+          "examples": [
+            1
+          ]
+        },
+        "menus": {
+          "$id": "#/properties/menus/properties/menus",
+          "type": "array",
+          "title": "The Menus Schema",
+          "items": {
+            "$id": "#/properties/menus/properties/menus/items",
+            "type": "object",
+            "title": "The Items Schema",
+            "required": [
+              "id",
+              "description",
+              "items"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/menus/properties/menus/items/properties/id",
+                "type": "string",
+                "title": "The Id Schema",
+                "default": "",
+                "examples": [
+                  "user_menu"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "description": {
+                "$id": "#/properties/menus/properties/menus/items/properties/description",
+                "type": "string",
+                "title": "The Description Schema",
+                "default": "",
+                "examples": [
+                  "asdfafd"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "items": {
+                "$id": "#/properties/menus/properties/menus/items/properties/items",
+                "type": "array",
+                "title": "The Items Schema",
+                "items": {
+                  "$id": "#/properties/menus/properties/menus/items/properties/items/items",
+                  "type": "object",
+                  "title": "The Items Schema",
+                  "required": [
+                    "id",
+                    "name"
+                  ],
+                  "properties": {
+                    "id": {
+                      "$id": "#/properties/menus/properties/menus/items/properties/items/items/properties/id",
+                      "type": "integer",
+                      "title": "The Id Schema",
+                      "default": 0,
+                      "examples": [
+                        1
+                      ]
+                    },
+                    "name": {
+                      "$id": "#/properties/menus/properties/menus/items/properties/items/items/properties/name",
+                      "type": "string",
+                      "title": "The Name Schema",
+                      "default": "",
+                      "examples": [
+                        "Example"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
               }
             }
           }

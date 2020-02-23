@@ -91,5 +91,24 @@
           "current": 50
         }
       }
-    ]
+    ],
+    "menus": {
+      "count": 1,
+      "menus": [
+        {
+          "id": "user_menu",
+          "description": "asdfafd",
+          "items": [
+            {
+              "id": 1,
+              "name": "Example"
+            },
+            {
+              "id": 2,
+              "name": "Example"
+            }
+          ]
+        }
+      ]
+    }
   }

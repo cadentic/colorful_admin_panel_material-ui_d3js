@@ -18,8 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 // Backend
-import axios from 'axios';
-import * as data from './components/JSON/data.example.json';
+// import * as data from './components/JSON/data.example.json';
 
 // Styles
 import clsx from 'clsx';
@@ -35,8 +34,7 @@ import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 
 // import json-s
 import * as textEn from './components/JSON/text.en.json';
-import IconButton from '@material-ui/core/IconButton';
-import { Divider, Icon, Menu, ListItemIcon, Avatar, Paper, createMuiTheme, Box } from '@material-ui/core';
+import { Avatar, Paper } from '@material-ui/core';
 import TaskForm, {fillPercentage} from './components/taskForm.js';
 import DataForm from './components/dataForm.js';
 import Calendar from './components/calendar.js'
@@ -44,6 +42,7 @@ import ProgressBar from './components/progressBar.js';
 import Chart, { chartDraw } from './components/chart.js';
 
 import logo from './logo.png';
+import getData from './components/getData.js';
 
 const appBarHeight = 60;
 const drawerWidth = 250;
@@ -237,44 +236,51 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
 
+	var data = getData();
+
 	// Drawer open or closed
-  const [state, setState] = React.useState({
-    isSideBar: false,
-  });
+	const [state, setState] = React.useState({
+		isSideBar: false,
+	});
 
-  // Account menu open or closed
-  const [openPoperAccount, setOpenPoperAccount] = React.useState(false);
+	// Account menu open or closed
+	const [openPoperAccount, setOpenPoperAccount] = React.useState(false);
 
-  // Drawer chosen item
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+	// Drawer chosen item
+	const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const anchorRef = React.useRef(null);
+	const anchorRef = React.useRef(null);
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
+	const handleListItemClick = (event, index) => {
+		setSelectedIndex(index);
+	};
 
-  const handleToggle = () => {
-    setOpenPoperAccount(prevOpen => !prevOpen);
-  };
+	const handleToggle = () => {
+		setOpenPoperAccount(prevOpen => !prevOpen);
+	};
 
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      setOpenPoperAccount(false);
-    }
-  }
+	function handleListKeyDown(event) {
+		if (event.key === 'Tab') {
+			event.preventDefault();
+			setOpenPoperAccount(false);
+		}
+	}
 
-  const handleClose = event => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
+	const handleClose = event => {
+		if (anchorRef.current && anchorRef.current.contains(event.target)) {
+			return;
+		}
 
     setOpenPoperAccount(false);
-  };
+	  };
+	  
 
-  const classes = useStyles();
-  let sidebar =
+	const classes = useStyles();
+	if (data.tasks === undefined) {
+		console.log('adasdasd')
+		return(<div>Something went wrong!</div>);
+	}
+	let sidebar =
         <div className={classes.list} >
 			<Drawer 
 			variant="permanent"
